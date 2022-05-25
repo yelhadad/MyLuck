@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { userInfo } from "os";
 import { Password } from "../services/password";
 
 //An inteface that describes the properties 
@@ -7,7 +6,8 @@ import { Password } from "../services/password";
 
 interface UserAttrs {
   email: string;
-  password: string
+  password: string;
+  mobileNumber: string;
 }
 
 // An intefase that describe the propeties
@@ -20,13 +20,15 @@ interface UserModel extends mongoose.Model<UserDoc>{
 // that a User document has
 interface UserDoc extends mongoose.Document{
   email: string;
-  password: string
+  password: string;
+  mobileNumber: string;
 }
 
 interface RetUserDoc extends mongoose.Document{
-  password?: string
-  email?: string
-  id?: string
+  password?: string;
+  email?: string;
+  id?: string;
+  mobileNumber: string;
 }
 
 const userSchema = new mongoose.Schema({
@@ -36,8 +38,14 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
-  }},{
+    required: true,
+  },
+  mobileNumber: {
+    type: String,
+    required: true,
+  }
+
+},{
      toJSON: {
     transform: (doc: UserDoc, ret: RetUserDoc) => {
       delete ret.password;

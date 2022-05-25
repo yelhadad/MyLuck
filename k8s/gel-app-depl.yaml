@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gel-app-depl
+  # namespace: tickting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gel-app
+  template:
+    metadata:
+      labels:
+        app: gel-app
+    spec:
+      containers:
+        - name: gel-app
+          image: yelhadad/gel-app-server
+          env:
+            - name: MONGO_URI
+              value: mongodb://gel-app-mongo-srv:27017/gel-app
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gel-app-srv
+#  namespace: tickting
+spec:
+  selector:
+    app: gel-app
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 4000

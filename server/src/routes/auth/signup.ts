@@ -1,9 +1,9 @@
 import express, {Request, Response} from "express";
 import { body } from "express-validator"
-import { BadRequestError } from "@ye-ticketing/common";
-import { User } from "../models/user";
+import { BadRequestError } from "../../errors/bad-request-error";
+import { User } from "../../models/user";
 import jwt from "jsonwebtoken";
-import { validateRequest } from "@ye-ticketing/common";
+import { validateRequest } from "../../middlewere/validation-handler";
 
 const router = express.Router();
 
@@ -11,6 +11,11 @@ router.post('/api/users/signup',[
   body('email')
   .isEmail()
   .withMessage('email is not valid'),
+  body('mobileNumber')
+  //.isMobilePhone(locale: 'am-AM')
+  // need to add filter to mobile phone
+  .notEmpty()
+  .withMessage('mobile number is not valid'),
   body('password')
   .trim()
   .isLength({min: 4, max: 20})
@@ -23,17 +28,17 @@ router.post('/api/users/signup',[
   // }
 
 
-  const { email ,password }: {email: string, password: string}  = req.body;
+  const { email ,password, mobileNumber }: {email: string, password: string, mobileNumber: string}  = req.body;
   // const hashedPassword = await Password.toHash(password);
 
 
-  if (await User.findOne({email: email}).exec() !== null){
+  if (await User.findOne({email: email}) !== null){
     console.log('Bad request error')
     throw new BadRequestError('user is already exits');
   }
   else {
     console.log('creating a user')
-    const newUser = User.build({email: email, password: password })
+    const newUser = User.build({email: email, password: password, mobileNumber: mobileNumber })
     await newUser.save();
 
     // Generate JWT

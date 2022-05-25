@@ -1,6 +1,6 @@
 import express, { Request, Response} from 'express';
-import { currentUser } from '@ye-ticketing/common';
-import { requireAuth } from '@ye-ticketing/common';
+import { currentUser } from '../../middlewere/current-user-middleware';
+import { requireAuth } from '../../middlewere/require-auth';
 
 const router = express.Router();
 

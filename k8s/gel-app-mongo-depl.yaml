@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gel-app-mongo-depl
+  # namespace: tickting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gel-app-mongo
+  template:
+    metadata:
+      labels:
+        app: gel-app-mongo
+    spec:
+      containers:
+        - name: gel-app-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gel-app-mongo-srv
+  # namespace: tickting
+spec:
+  selector:
+    app: gel-app-mongo
+  ports:
+    - name: gel-app-mongo
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

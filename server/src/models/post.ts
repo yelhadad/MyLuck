@@ -1,36 +1,48 @@
 import mongoose from "mongoose";
 
 //An inteface that describes the properties 
-// that are requied to create new Profile
-interface ProfileAttrs {
-
-    // will be more
+// that are requied to create new Post
+interface PostAttrs {
+  images: string[];
+  userId: string;
+  text: string;
+  location: {
+    longitude: string,
+    latitude:  string,
+  }
+  // will be more
 }
 
 // An intefase that describe the propeties
-// that a Profile model has
-interface ProfileModel extends mongoose.Model<ProfileDoc>{
-  build(attrs: ProfileAttrs): ProfileDoc
+// that a Post model has
+interface PostModel extends mongoose.Model<PostDoc>{
+  build(attrs: PostAttrs): PostDoc
 }
 
 // An inteface that describes the properties
-// that a Profile document has
-interface ProfileDoc extends mongoose.Document{
-
+// that a Post document has
+interface PostDoc extends mongoose.Document{
+  userId: string;
+  images: Buffer[];
+  counterOfLikes: number;
+  text: string
 }
 
-interface RetProfileDoc extends mongoose.Document{
-    
+interface RetPostDoc extends mongoose.Document{
+  userId?: string;
+  images?: Buffer[];
+  counterOfLikes?: number;
+  text?: string
 }
 
-const profileSchema = new mongoose.Schema({
-    profilePicture: {
-        type: Buffer,
-        required: true,
+const postSchema = new mongoose.Schema({
+    images: {
+        data: Array,
+        contentType: true,
     }
 },{
      toJSON: {
-    transform: (doc: ProfileDoc, ret: RetProfileDoc) => {
+    transform: (doc: PostDoc, ret: RetPostDoc) => {
       delete ret.__v;
       ret['id'] = ret._id
       delete ret._id
@@ -38,10 +50,10 @@ const profileSchema = new mongoose.Schema({
   }
 }
 )
-profileSchema.statics.build = (attrs: ProfileAttrs) => {
-  return new Profile(attrs);
+postSchema.statics.build = (attrs: PostAttrs) => {
+  return new Post(attrs);
 }
 
-const Profile = mongoose.model<ProfileDoc, ProfileModel>('Profile', profileSchema)
+const Post = mongoose.model<PostDoc, PostModel>('Post', postSchema)
 
-export { Profile };
+export { Post };
