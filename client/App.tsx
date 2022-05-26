@@ -1,11 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native';
 import logo from './assets/logo.png'
 import * as ImagePicker from 'expo-image-picker';
+import * as Sharing from 'expo-sharing'
 import { useState } from 'react'; 
+import uploadToAnonymousFilesAsync from 'anonymous-files';
 
 export default function App() {
-  const [selectImage, setSelectedImage] = useState(null)
+  interface SelectImage {
+    localUri: any
+    remoteUri?: any
+  }
+  const [selectImage, setSelectedImage] = useState<SelectImage | null>(null)
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -21,19 +27,41 @@ export default function App() {
       return;
     }
 
-    setSelectedImage({ localUri: pickerResult.uri })
+    setSelectedImage({ localUri: pickResult.uri })
+
+    if (Platform.OS === 'web') {
+      let remoteUri = await uploadToAnonymousFilesAsync(pickResult.uri);
+      setSelectedImage({localUri: pickResult.uri, remoteUri});
+    } else {
+      setSelectedImage({localUri: pickResult.uri, remoteUri: null});
+    }
+
+      return;
+    }
+  
+
+    let openShareDialogAsync = async () => {
+      if (!(await Sharing.isAvailableAsync())) {
+        alert(`The image is available for sharing at: ${selectImage?.remoteUri}`)
+        return;
+      }
+      await Sharing.shareAsync(selectImage?.remoteUri || selectImage?.localUri)
+    }
+
 
     if (selectImage !== null) {
       return (
-        <View style={styles.container}
+        <View style={styles.container}>
           <Image
-          source={{uri: selectedImage.localUri}}
-          style={styles.thumbnail}
-          />
+          source={{uri: selectImage.localUri}}
+          style={styles.thumbernail}/>
+          <TouchableOpacity onPress={openShareDialogAsync} style = {styles.button}>
+            <Text style={styles.buttonText}>Share this photo now!</Text>
+          </TouchableOpacity>
         </View>
       )
     }
-  }
+  
   return (
     <View style={styles.container}>
       <Image source={{uri: "https://i.imgur.com/TkIrScD.png"}} style={styles.logo} />
@@ -69,7 +97,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: 'blue',
-    padding: 20,
+    padding: 30,
     borderRadius: 5
   },
   buttonText: {
@@ -78,8 +106,8 @@ const styles = StyleSheet.create({
   },
   thumbernail: {
     width: 300,
-    height: 300
-    resizeMode: 'contain'
+    height: 300,
+    resizeMode: 'contain',
   }
 
 });
