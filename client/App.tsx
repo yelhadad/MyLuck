@@ -1,32 +1,22 @@
-import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationOptions,
-} from "@react-navigation/native-stack";
-import BasicShare from "./components/basic-share";
-import HomePage from "./components/HomePage";
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-type RootStackParamList = {
-  Home: {
-    yoav: string;
-  };
-  BaseShare: undefined;
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+import useCachedResources from './hooks/useCachedResources';
+import useColorScheme from './hooks/useColorScheme';
+import Navigation from './navigation';
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={HomePage}
-          initialParams={{ yoav: "yoavi" }}
-        />
-        <Stack.Screen name="BaseShare" component={BasicShare} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  const isLoadingComplete = useCachedResources();
+  const colorScheme = useColorScheme();
+
+  if (!isLoadingComplete) {
+    return null;
+  } else {
+    return (
+      <SafeAreaProvider>
+        <Navigation colorScheme={colorScheme} />
+        <StatusBar />
+      </SafeAreaProvider>
+    );
+  }
 }
