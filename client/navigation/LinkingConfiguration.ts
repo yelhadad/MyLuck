@@ -27,7 +27,27 @@ const linking: LinkingOptions<RootStackParamList> = {
           },
           Home: {
             screens: {
-              Home: "third",
+              HomeScreen: "third",
+            },
+          },
+          Search: {
+            screens: {
+              SerachScreen: "fourth",
+            },
+          },
+          Calander: {
+            screens: {
+              CalanderScreen: "fifth",
+            },
+          },
+          Profile: {
+            screens: {
+              ProfileScreen: "sixth",
+            },
+          },
+          Dev: {
+            screens: {
+              DevScreen: "seventh",
             },
           },
         },

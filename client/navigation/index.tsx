@@ -31,6 +31,11 @@ import SearchScreen from "../screens/SearchScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import CalanderScreen from "../screens/CalnderScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import DevScreen from "../screens/DevScreen";
+import { HomeHeader } from "../components/HomeHeader";
+import { getHeaderTitle } from "@react-navigation/elements";
+import Signin from "../components/Signin";
+import Signup from "../components/Signup";
 
 export default function Navigation({
   colorScheme,
@@ -66,6 +71,8 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
+      <Stack.Screen name="Signin" component={Signin} />
+      <Stack.Screen name="Signin" component={Signin} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -84,9 +91,10 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Dev"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerShown: true,
       }}
     >
       <BottomTab.Screen
@@ -126,6 +134,11 @@ function BottomTabNavigator() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          header: ({ navigation, route, options }) => {
+            const title = getHeaderTitle(options, route.name);
+
+            return <HomeHeader title={title} style={options.headerStyle} />;
+          },
         }}
       />
       <BottomTab.Screen
@@ -160,6 +173,14 @@ function BottomTabNavigator() {
         options={{
           title: "Settings",
           tabBarIcon: ({ color }) => <TabBarIcon name="gear" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Dev"
+        component={DevScreen}
+        options={{
+          title: "Dev",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
     </BottomTab.Navigator>
