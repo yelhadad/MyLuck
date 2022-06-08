@@ -36,6 +36,10 @@ import { HomeHeader } from "../components/HomeHeader";
 import { getHeaderTitle } from "@react-navigation/elements";
 import Signin from "../components/Signin";
 import Signup from "../components/Signup";
+import SigninScreen from "../screens/SigninScreen";
+import SignupScreen from "../screens/SignupScreen";
+import CosmeticianSignupScreen from "../screens/CosmeticianSignupScreen";
+import CalanderScreenExamples from "../screens/CalendarsExamplesScreen";
 
 export default function Navigation({
   colorScheme,
@@ -71,8 +75,16 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Screen name="Signin" component={Signin} />
-      <Stack.Screen name="Signin" component={Signin} />
+      <Stack.Screen name="Signin" component={SigninScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen
+        name="CosmeticianSignup"
+        component={CosmeticianSignupScreen}
+      />
+      <Stack.Screen
+        name="CalenderExamples"
+        component={CalanderScreenExamples}
+      />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -150,7 +162,7 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Calander"
+        name="Calendar"
         component={CalanderScreen}
         options={{
           title: "Calander",

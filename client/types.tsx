@@ -22,6 +22,8 @@ export type RootStackParamList = {
   NotFound: undefined;
   Signin: undefined;
   Signup: undefined;
+  CosmeticianSignup: undefined;
+  CalenderExamples: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -33,7 +35,7 @@ export type RootTabParamList = {
   Home: undefined;
   Settings: undefined;
   Search: undefined;
-  Calander: undefined;
+  Calendar: undefined;
   Profile: undefined;
   Dev: undefined;
 };

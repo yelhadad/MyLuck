@@ -14,20 +14,26 @@ import { userType } from "../types/signup";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { increment } from "../redux/counter/counterSlice";
-import { useNavigation } from "@react-navigation/native";
-
+//
 type FormData = {
   email: string;
   password: string;
   confermPassword: string;
   mobileNumber: string;
-  userType: userType;
+  businessNane: string;
+  contact: string;
+  // שעות פעילות
+  // can be date
+  activityTime: string;
+  // in the future choose from a map or type the adress
+  location: string;
+  highPrice: string;
+  lowPrice: string;
 };
 
-export default function App() {
+export default function CosmeticainSignup() {
   const dispatch = useDispatch();
   const counter = useSelector((state: RootState) => state.counter.value);
-  const navigation = useNavigation();
   const {
     control,
     handleSubmit,
@@ -38,9 +44,13 @@ export default function App() {
       password: "",
       confermPassword: "",
       mobileNumber: "",
-      userType: userType.client,
+      businessNane: "",
+      contact: "",
+      activityTime: "",
+      location: "",
     },
   });
+
   const onSubmit = (data: any) => console.log(data);
 
   return (
@@ -122,6 +132,102 @@ export default function App() {
           )}
           name="mobileNumber"
         />
+        <Controller
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Business Name"
+              placeholderTextColor={"black"}
+              keyboardType="default"
+            />
+          )}
+          name="businessNane"
+        />
+        <Controller
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="contact information"
+              placeholderTextColor={"black"}
+              keyboardType="default"
+            />
+          )}
+          name="contact"
+        />
+        <Controller
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="location"
+              placeholderTextColor={"black"}
+              keyboardType="default"
+            />
+          )}
+          name="location"
+        />
+        <Controller
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Activity Time"
+              placeholderTextColor={"black"}
+              keyboardType="default"
+            />
+          )}
+          name="activityTime"
+        />
+        <Controller
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="High price"
+              placeholderTextColor={"black"}
+              keyboardType="default"
+            />
+          )}
+          name="highPrice"
+        />
+        <Controller
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Low Price"
+              placeholderTextColor={"black"}
+              keyboardType="default"
+            />
+          )}
+          name="lowPrice"
+        />
 
         <Button title="Submit" onPress={handleSubmit(onSubmit)} />
 
@@ -131,10 +237,6 @@ export default function App() {
           onPress={() => dispatch(increment())}
         />
       </View>
-      <Button
-        title="Cosmetician? Sign up here!"
-        onPress={() => navigation.navigate("CosmeticianSignup")}
-      />
     </ScrollView>
   );
 }

@@ -19,10 +19,9 @@ type FormData = {
   password: string;
 };
 
-const count = useSelector((state: RootState) => state.counter.value);
-const dispatch = useDispatch();
-
-export default function App() {
+export default function Signin() {
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,

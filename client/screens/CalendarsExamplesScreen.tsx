@@ -1,12 +1,12 @@
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import { StyleSheet } from "react-native";
-import CalendarPage from "../components/CalendarPage";
+import Calendar from "../components/CalendarsExamples";
 
-export default function CalanderScreen({
+export default function CalanderScreenExamples({
   navigation,
-}: RootTabScreenProps<"Calendar">) {
-  return <CalendarPage />;
+}: RootTabScreenProps<"Home">) {
+  return <Calendar />;
 }
 
 const styles = StyleSheet.create({
