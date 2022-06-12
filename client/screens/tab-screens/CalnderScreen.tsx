@@ -1,7 +1,7 @@
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import { Text, View } from "../../components/Themed";
+import { RootTabScreenProps } from "../../types";
 import { StyleSheet } from "react-native";
-import CalendarPage from "../components/CalendarPage";
+import CalendarPage from "../../components/CalendarPage";
 
 export default function CalanderScreen({
   navigation,

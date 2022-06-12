@@ -1,5 +1,3 @@
-import { RootStackScreenProps } from "../types";
-import Signin from "../components/Signin";
 import React from "react";
 import {
   Text,
@@ -13,18 +11,24 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import Constants from "expo-constants";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../redux/store";
-import { increment } from "../redux/counter/counterSlice";
+import { RootState } from "../../redux/store";
+import {
+  increment,
+  decrement,
+  selectCount,
+} from "../../redux/counter/counterSlice";
+import { logOff, signIn } from "../../redux/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useNavigation } from "@react-navigation/native";
 
 type FormData = {
   username: string;
   password: string;
 };
-
-export default function SigninScreen({
-  navigation,
-}: RootStackScreenProps<"Signin">) {
+// this coponent is not in use right now!!!!!
+export default function Signin() {
   const count = useSelector((state: RootState) => state.counter.value);
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const {
     control,
@@ -36,7 +40,10 @@ export default function SigninScreen({
       password: "",
     },
   });
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => {
+    console.log(data);
+    dispatch(signIn({ email: "yoave14@gmail.com", isSignIn: true }));
+  };
   return (
     <>
       <ScrollView>
@@ -87,7 +94,7 @@ export default function SigninScreen({
           />
           <Button
             title="already have an account? sign up!"
-            onPress={() => navigation.push("Signup")}
+            onPress={() => navigation.navigate("Signup")}
           />
           <Text>hiiii</Text>
         </View>

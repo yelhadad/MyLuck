@@ -10,10 +10,10 @@ import {
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import Constants from "expo-constants";
-import { userType } from "../types/signup";
+import { userType } from "../../types/signup";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { increment } from "../redux/counter/counterSlice";
+import { RootState } from "../../redux/store";
+import { increment } from "../../redux/counter/counterSlice";
 import { useNavigation } from "@react-navigation/native";
 
 type FormData = {
@@ -27,6 +27,8 @@ type FormData = {
 export default function App() {
   const dispatch = useDispatch();
   const counter = useSelector((state: RootState) => state.counter.value);
+  const isSignIn = useSelector((state: RootState) => state.user.isSignIn);
+  console.log(isSignIn);
   const navigation = useNavigation();
   const {
     control,

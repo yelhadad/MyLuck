@@ -1,5 +1,5 @@
-import { RootStackScreenProps } from "../types";
-import Signup from "../components/Signup";
+import { RootStackScreenProps } from "../../types";
+import Signup from "../../components/auth/Signup";
 import { Button, Text } from "react-native";
 
 export default function SignupScreen({

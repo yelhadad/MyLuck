@@ -35,7 +35,7 @@ const linking: LinkingOptions<RootStackParamList> = {
               SerachScreen: "fourth",
             },
           },
-          Calander: {
+          Calendar: {
             screens: {
               CalanderScreen: "fifth",
             },

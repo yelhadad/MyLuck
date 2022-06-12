@@ -1,7 +1,7 @@
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import { Text, View } from "../../components/Themed";
+import { RootTabScreenProps } from "../../types";
 import { StyleSheet } from "react-native";
-import Profile from "../components/Profile";
+import Profile from "../../components/Profile";
 export default function ProfileScreen({
   navigation,
 }: RootTabScreenProps<"Home">) {

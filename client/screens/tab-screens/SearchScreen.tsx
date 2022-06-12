@@ -1,5 +1,5 @@
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import { Text, View } from "../../components/Themed";
+import { RootTabScreenProps } from "../../types";
 import { StyleSheet } from "react-native";
 
 export default function SearchScreen({

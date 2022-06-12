@@ -18,28 +18,32 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import TabOneScreen from "../screens//tab-screens/TabOneScreen";
+import TabTwoScreen from "../screens/tab-screens/TabTwoScreen";
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import HomeScreen from "../screens/HomeScreen";
-import SearchScreen from "../screens/SearchScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import CalanderScreen from "../screens/CalnderScreen";
-import SettingsScreen from "../screens/SettingsScreen";
-import DevScreen from "../screens/DevScreen";
+import HomeScreen from "../screens/tab-screens/HomeScreen";
+import SearchScreen from "../screens/tab-screens/SearchScreen";
+import ProfileScreen from "../screens/tab-screens/ProfileScreen";
+import CalanderScreen from "../screens/tab-screens/CalnderScreen";
+import SettingsScreen from "../screens/tab-screens/SettingsScreen";
+import DevScreen from "../screens/tab-screens/DevScreen";
 import { HomeHeader } from "../components/HomeHeader";
 import { getHeaderTitle } from "@react-navigation/elements";
-import Signin from "../components/Signin";
-import Signup from "../components/Signup";
-import SigninScreen from "../screens/SigninScreen";
-import SignupScreen from "../screens/SignupScreen";
-import CosmeticianSignupScreen from "../screens/CosmeticianSignupScreen";
+import Signin from "../components/auth/Signin";
+import Signup from "../components/auth/Signup";
+import SigninScreen from "../screens/auth/SigninScreen";
+import SignupScreen from "../screens/auth/SignupScreen";
+import CosmeticianSignupScreen from "../screens/auth/CosmeticianSignupScreen";
 import CalanderScreenExamples from "../screens/CalendarsExamplesScreen";
+import { useSelector } from "react-redux";
+import { useAppSelector } from "../redux/hooks";
+import { RootState } from "../redux/store";
+import NewPost from "../components/NewPost";
 
 export default function Navigation({
   colorScheme,
@@ -63,23 +67,36 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const userStates = useSelector((state: RootState) => state.user);
+  const isSignin = useAppSelector((state: RootState) => state.user.isSignIn);
+  console.log(isSignin);
+  const isLogedIn = false;
+  //console.log(isSignIn);
+
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
+      {isSignin ? (
+        <>
+          <Stack.Screen
+            name="Root"
+            component={BottomTabNavigator}
+            options={{ headerShown: false }}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="Signin" component={SigninScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
+          <Stack.Screen
+            name="CosmeticianSignup"
+            component={CosmeticianSignupScreen}
+          />
+        </>
+      )}
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
-      />
-      <Stack.Screen name="Signin" component={SigninScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-      <Stack.Screen
-        name="CosmeticianSignup"
-        component={CosmeticianSignupScreen}
       />
       <Stack.Screen
         name="CalenderExamples"
@@ -92,6 +109,15 @@ function RootNavigator() {
   );
 }
 
+function StackHomeScreen() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="NewPost" component={NewPost} />
+    </Stack.Navigator>
+  );
+}
+
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -100,7 +126,6 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
   return (
     <BottomTab.Navigator
       initialRouteName="Dev"
@@ -142,7 +167,7 @@ function BottomTabNavigator() {
       /> */}
       <BottomTab.Screen
         name="Home"
-        component={HomeScreen}
+        component={StackHomeScreen}
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
