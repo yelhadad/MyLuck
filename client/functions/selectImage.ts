@@ -4,7 +4,7 @@ if the user accepts, the function return the image uri */
 
 import * as ImagePicker from "expo-image-picker";
 
-const openImagePickerAsync = async () => {
+export const openImagePickerAsync = async () => {
   let premissionResult =
     await ImagePicker.requestMediaLibraryPermissionsAsync();
 

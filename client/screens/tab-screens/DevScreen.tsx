@@ -6,10 +6,17 @@ import Signin from "../../components/auth/Signin";
 import Signup from "../../components/auth/Signup";
 import SignupScreen from "../auth/SignupScreen";
 import NewPost from "../../components/NewPost";
+import Profile from "../../components/Profile";
 export default function DevScreen({ navigation }: RootTabScreenProps<"Dev">) {
   return (
     <>
-      <NewPost />
+      <Profile
+        image="fs"
+        followers={2}
+        following={100}
+        numOfPosts={2}
+        posts={""}
+      />
     </>
   );
 }

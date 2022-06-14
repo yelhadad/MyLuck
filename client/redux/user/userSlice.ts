@@ -14,7 +14,7 @@ const initialState: UserState = {
   email: null,
   name: null,
   lastName: null,
-  isSignIn: false,
+  isSignIn: true,
 } as UserState;
 
 export const userSlice = createSlice({

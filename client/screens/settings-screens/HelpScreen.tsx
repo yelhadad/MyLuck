@@ -1,12 +1,13 @@
 import { Text, View } from "../../components/Themed";
 import { RootTabScreenProps } from "../../types";
 import { StyleSheet } from "react-native";
-import SearchBar from "../../components/SearchBar";
 
-export default function SearchScreen({
-  navigation,
-}: RootTabScreenProps<"Home">) {
-  return <SearchBar />;
+export default function HelpScreen({ navigation }: RootTabScreenProps<"Home">) {
+  return (
+    <View style={styles.container}>
+      <Text>Help</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

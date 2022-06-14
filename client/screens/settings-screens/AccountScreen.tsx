@@ -1,12 +1,15 @@
 import { Text, View } from "../../components/Themed";
 import { RootTabScreenProps } from "../../types";
 import { StyleSheet } from "react-native";
-import SearchBar from "../../components/SearchBar";
 
-export default function SearchScreen({
+export default function AccountScreen({
   navigation,
 }: RootTabScreenProps<"Home">) {
-  return <SearchBar />;
+  return (
+    <View style={styles.container}>
+      <Text>Account</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

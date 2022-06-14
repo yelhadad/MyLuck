@@ -6,6 +6,7 @@
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import {
   CompositeScreenProps,
+  NavigationProp,
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -26,8 +27,30 @@ export type RootStackParamList = {
   CalenderExamples: undefined;
 };
 
+export type HomeStackParamList = {
+  HomeScreen: undefined;
+  NewPost: undefined;
+};
+
+export type SettingsStackParamList = {
+  SettingsScreen: undefined;
+  NotificationsScreen: undefined;
+  PrivacyScreen: undefined;
+  SecurityScreen: undefined;
+  AccountScreen: undefined;
+  HelpScreen: undefined;
+  AboutScreen: undefined;
+};
+
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
+
+export type HomeStackScreemProps<Screen extends keyof HomeStackParamList> =
+  NativeStackScreenProps<HomeStackParamList, Screen>;
+
+export type SettingsStackScreemProps<
+  Screen extends keyof SettingsStackParamList
+> = NativeStackScreenProps<SettingsStackParamList, Screen>;
 
 export type RootTabParamList = {
   TabOne: undefined;
@@ -45,3 +68,6 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     BottomTabScreenProps<RootTabParamList, Screen>,
     NativeStackScreenProps<RootStackParamList>
   >;
+
+// this type is for useNavigation hook
+export type SettingsNavigation = NavigationProp<SettingsStackParamList>;

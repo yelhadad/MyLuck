@@ -21,6 +21,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens//tab-screens/TabOneScreen";
 import TabTwoScreen from "../screens/tab-screens/TabTwoScreen";
 import {
+  HomeStackParamList,
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
@@ -44,6 +45,8 @@ import { useSelector } from "react-redux";
 import { useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import NewPost from "../components/NewPost";
+import HomeStackNavigator from "./navigators/HomeStackNavigator";
+import SettingsStackNavigator from "./navigators/SettingsStackNavigator";
 
 export default function Navigation({
   colorScheme,
@@ -109,15 +112,6 @@ function RootNavigator() {
   );
 }
 
-function StackHomeScreen() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen name="NewPost" component={NewPost} />
-    </Stack.Navigator>
-  );
-}
-
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -167,7 +161,7 @@ function BottomTabNavigator() {
       /> */}
       <BottomTab.Screen
         name="Home"
-        component={StackHomeScreen}
+        component={HomeStackNavigator}
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
@@ -206,9 +200,10 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Settings"
-        component={SettingsScreen}
+        component={SettingsStackNavigator}
         options={{
           title: "Settings",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="gear" color={color} />,
         }}
       />
