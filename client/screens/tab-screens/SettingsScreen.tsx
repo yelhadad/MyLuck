@@ -5,7 +5,7 @@ import Settings from "../../components/Settings";
 
 export default function SettingsScreen({
   navigation,
-}: RootTabScreenProps<"Home">) {
+}: RootTabScreenProps<"Settings">) {
   return <Settings />;
 }
 

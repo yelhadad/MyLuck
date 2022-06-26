@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     top: "10%",
-    height: 100,
+    height: "10%",
   },
   monoView: {
     display: "flex",

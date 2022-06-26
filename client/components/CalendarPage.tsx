@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Calendar, CalendarProps } from "react-native-calendars";
 import testIDs from "../assets/calendar/testIDs";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CalendarPage() {
   return (
@@ -21,10 +22,10 @@ export default function CalendarPage() {
         </Text>
         <Calendar
           style={styles.calendar}
-          current={"2012-05-16"}
+          current={new Date().toDateString()}
           hideExtraDays
           disableAllTouchEventsForDisabledDays
-          firstDay={1}
+          firstDay={0}
           markedDates={{
             "2012-05-23": {
               selected: true,

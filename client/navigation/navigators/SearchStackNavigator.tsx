@@ -7,11 +7,11 @@ import { HomeStackParamList } from "../../types";
 import OrderAppointmentScreen from "../../screens/home-screens/OrderAppointmentScreen";
 import ConfirmNewApointmentScreen from "../../screens/home-screens/ConfirmNewApointmentScreen";
 
-const HomeStack = createNativeStackNavigator<HomeStackParamList>();
+//const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 export default function HomeStackNavigator() {
   return (
-    <HomeStack.Navigator id="HomeStack">
+    <HomeStack.Navigator>
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}

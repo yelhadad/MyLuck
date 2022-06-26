@@ -12,7 +12,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { Button, ColorSchemeName, Pressable } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -27,13 +27,13 @@ import {
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import HomeScreen from "../screens/tab-screens/HomeScreen";
+import HomeScreen from "../screens/home-screens/HomeScreen";
 import SearchScreen from "../screens/tab-screens/SearchScreen";
 import ProfileScreen from "../screens/tab-screens/ProfileScreen";
 import CalanderScreen from "../screens/tab-screens/CalnderScreen";
 import SettingsScreen from "../screens/tab-screens/SettingsScreen";
 import DevScreen from "../screens/tab-screens/DevScreen";
-import { HomeHeader } from "../components/HomeHeader";
+import HomeHeader from "../components/HomeHeader";
 import { getHeaderTitle } from "@react-navigation/elements";
 import Signin from "../components/auth/Signin";
 import Signup from "../components/auth/Signup";
@@ -47,6 +47,8 @@ import { RootState } from "../redux/store";
 import NewPost from "../components/NewPost";
 import HomeStackNavigator from "./navigators/HomeStackNavigator";
 import SettingsStackNavigator from "./navigators/SettingsStackNavigator";
+import CustomCameraScreen from "../screens/CustomCameraScreen";
+import NewPostButton from "../components/NewPostButton";
 
 export default function Navigation({
   colorScheme,
@@ -105,6 +107,7 @@ function RootNavigator() {
         name="CalenderExamples"
         component={CalanderScreenExamples}
       />
+      <Stack.Screen name="Camera" component={CustomCameraScreen} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -163,13 +166,8 @@ function BottomTabNavigator() {
         name="Home"
         component={HomeStackNavigator}
         options={{
-          title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          header: ({ navigation, route, options }) => {
-            const title = getHeaderTitle(options, route.name);
-
-            return <HomeHeader title={title} style={options.headerStyle} />;
-          },
         }}
       />
       <BottomTab.Screen

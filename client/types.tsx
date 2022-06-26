@@ -8,6 +8,7 @@ import {
   CompositeScreenProps,
   NavigationProp,
   NavigatorScreenParams,
+  RouteProp,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
@@ -25,11 +26,18 @@ export type RootStackParamList = {
   Signup: undefined;
   CosmeticianSignup: undefined;
   CalenderExamples: undefined;
+  Camera: undefined;
 };
 
 export type HomeStackParamList = {
   HomeScreen: undefined;
-  NewPost: undefined;
+  NewPost:
+    | {
+        imageURI?: string;
+      }
+    | undefined;
+  OrderApointmentScreen: undefined;
+  ConfirmNewApointmentScreen: undefined;
 };
 
 export type SettingsStackParamList = {
@@ -40,6 +48,17 @@ export type SettingsStackParamList = {
   AccountScreen: undefined;
   HelpScreen: undefined;
   AboutScreen: undefined;
+};
+
+export type ProfileStackParamList = {
+  ProfileScreen: undefined;
+  SinglePostScreen: undefined;
+  OrderApointmentScreen: undefined;
+  ConfirmNewApointmentScreen: undefined;
+};
+
+export type SearchStackParamList = {
+  SearchScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -71,3 +90,12 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 
 // this type is for useNavigation hook
 export type SettingsNavigation = NavigationProp<SettingsStackParamList>;
+export type HomeNavigation = NavigationProp<HomeStackParamList>;
+export type ProfileNavigation = NavigationProp<ProfileStackParamList>;
+export type SearchNavigation = NavigationProp<SearchStackParamList>;
+
+// for useRoute
+export type RootRouteProps<RouteName extends keyof RootStackParamList> =
+  RouteProp<RootStackParamList, RouteName>;
+
+export type HomeRouteProps = RouteProp<HomeStackParamList>;

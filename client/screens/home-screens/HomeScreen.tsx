@@ -1,6 +1,6 @@
 import { View, Text } from "../../components/Themed";
 import { HomeStackScreemProps, RootTabScreenProps } from "../../types";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import SinglePost from "../../components/SinglePost";
 import Colors from "../../constants/Colors";
 
@@ -8,19 +8,10 @@ export default function HomeScreen({
   navigation,
 }: HomeStackScreemProps<"HomeScreen">) {
   return (
-    <>
-      <View style={styles.helpContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("NewPost")}
-          style={styles.helpLink}
-        >
-          <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-            New Post!
-          </Text>
-        </TouchableOpacity>
-      </View>
+    <ScrollView>
       <SinglePost title="hi" description="hi" image={"fdgd"} />
-    </>
+      <SinglePost title="hi" description="hi" image={"fdgd"} />
+    </ScrollView>
   );
 }
 

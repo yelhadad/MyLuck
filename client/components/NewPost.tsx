@@ -1,7 +1,5 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
-  Text,
-  View,
   TextInput,
   Button,
   Alert,
@@ -10,10 +8,12 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { View, Text } from "./Themed";
 import { useForm, Controller, SetFieldValue } from "react-hook-form";
 import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { HomeRouteProps } from "../types";
 
 type FormData = {
   image: SelectedImage | null;
@@ -24,11 +24,67 @@ type FormData = {
   };
 };
 
+interface NewPostParams {
+  imageURI?: string;
+}
+
 interface SelectedImage {
   localUri?: string;
+  cameraImageUri?: string;
 }
+
 // this coponent is not in use right now!!!!!
 export default function NewPost() {
+  const navigation = useNavigation();
+  const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(
+    null
+  );
+  const route = useRoute<HomeRouteProps>();
+
+  const luanchCamera = () => {};
+
+  const ImageDisplay = () => {
+    if (route.params?.imageURI !== undefined) {
+      return (
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <>
+              <Image
+                source={{ uri: value?.cameraImageUri }}
+                style={styles.thumbnail}
+              />
+            </>
+          )}
+          name="image"
+        />
+      );
+    } else if (getValues("image.localUri") !== undefined) {
+      return (
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <>
+              <Image
+                source={{ uri: value?.localUri }}
+                style={styles.thumbnail}
+              />
+            </>
+          )}
+          name="image"
+        />
+      );
+    } else {
+      return null;
+    }
+  };
+
   const {
     control,
     handleSubmit,
@@ -44,9 +100,6 @@ export default function NewPost() {
       },
     },
   });
-  const navigation = useNavigation();
-  const [selectedImage, setSelectedImage] =
-    React.useState<SelectedImage | null>(null);
 
   let openImagePickerAsync = async () => {
     let permissionResult =
@@ -58,11 +111,26 @@ export default function NewPost() {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    // set image state
     if (pickerResult.cancelled === true) {
       return;
     }
     setValue("image.localUri", pickerResult.uri);
+    setValue("image.cameraImageUri", undefined);
   };
+
+  const [previosImageUriRouteParam, setPreviosImageUriRouteParam] = useState(
+    route.params?.imageURI
+  );
+
+  if (
+    route.params?.imageURI !== undefined &&
+    route.params?.imageURI !== previosImageUriRouteParam
+  ) {
+    setValue("image.cameraImageUri", route.params?.imageURI);
+    setValue("image.localUri", undefined);
+    setPreviosImageUriRouteParam(route.params.imageURI);
+  }
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -76,24 +144,10 @@ export default function NewPost() {
           <TouchableOpacity onPress={openImagePickerAsync}>
             <Text>choose picture</Text>
           </TouchableOpacity>
-          {getValues("image.localUri") ? (
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <>
-                  <Image
-                    source={{ uri: value!.localUri }}
-                    style={styles.thumbnail}
-                  />
-                </>
-              )}
-              name="image"
-            />
-          ) : null}
-
+          <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
+            <Text>camera</Text>
+          </TouchableOpacity>
+          <ImageDisplay />
           <Controller
             control={control}
             rules={{
@@ -141,8 +195,6 @@ export default function NewPost() {
           />
 
           <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-          <Text>redux counter is {} </Text>
-          <Text>hiiii</Text>
         </View>
       </ScrollView>
     </>
@@ -185,5 +237,26 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     resizeMode: "contain",
+  },
+  CameraContainer: {
+    flex: 1,
+  },
+  camera: {
+    flex: 1,
+  },
+  CameraButtonContainer: {
+    flex: 1,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    margin: 20,
+  },
+  CameraButton: {
+    flex: 0.1,
+    alignSelf: "flex-end",
+    alignItems: "center",
+  },
+  CameraText: {
+    fontSize: 18,
+    color: "white",
   },
 });
